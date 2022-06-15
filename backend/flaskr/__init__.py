@@ -83,7 +83,8 @@ def create_app(test_config=None):
                 abort(500)
             else:
                 return jsonify({
-                    "success": True
+                    "success": True,
+                    "question_id": question_id
                 }), 200
         else:
             abort(422)
