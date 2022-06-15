@@ -163,9 +163,9 @@ def create_app(test_config=None):
             # other categories
             all_questions = Question.query.filter_by(
                 category=quiz_category["id"]).all()
-            print(all_questions)
+
             if not all_questions:
-                print("nothing")
+
                 abort(404)
 
         question_list = [q.format() for q in all_questions
