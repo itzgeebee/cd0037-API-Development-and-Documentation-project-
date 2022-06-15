@@ -125,9 +125,9 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data["message"], "resource not found")
 
     def test_delete_question(self):
-        res = self.client().delete("/questions/15")
+        res = self.client().delete("/questions/16")
         data = json.loads(res.data)
-        question = Question.query.get(15)
+        question = Question.query.get(16)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -171,10 +171,10 @@ class TriviaTestCase(unittest.TestCase):
         res = self.client().post("/question")
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 500)
+        self.assertEqual(res.status_code, 400)
         self.assertEqual(data["success"], False)
         self.assertEqual(data["message"],
-                         "internal server error")
+                         "bad request")
 
     def test_get_quiz(self):
         res = self.client().post("/quizzes",

@@ -157,19 +157,28 @@ def create_app(test_config=None):
         previous_question = data.get("previous_questions")
         quiz_category = data.get("quiz_category")
 
-        if quiz_category["id"] == 0:
+        if quiz_category["id"] == 0:  # all categories
             all_questions = Question.query.all()
         else:
+            # other categories
             all_questions = Question.query.filter_by(
-                category=quiz_category["id"])
+                category=quiz_category["id"]).all()
+            print(all_questions)
+            if not all_questions:
+                print("nothing")
+                abort(404)
 
         question_list = [q.format() for q in all_questions
                          if q.id not in previous_question]
-        try:
-            question = random.choice(question_list)
-        except IndexError:
-            abort(404)
+
+        if question_list == []:
+            return jsonify({
+                "success": True
+            })
+
         else:
+
+            question = random.choice(question_list) #generate a random question
 
             return jsonify({
                 "success": True,
